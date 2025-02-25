@@ -68,7 +68,7 @@ onAuthStateChanged(auth, (user) => {
 });
 
 // Event listener for the sign-in button
-document.getElementById("sign-in-btn").addEventListener("click", signInWithGoogle);
+document.getElementById("sign-in-btn")?.addEventListener("click", signInWithGoogle);
 
 // Event listener for the sign-out button
-document.getElementById("sign-out-btn").addEventListener("click", signOutUser);
+document.getElementById("sign-out-btn")?.addEventListener("click", signOutUser);

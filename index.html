@@ -7,13 +7,14 @@
     <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-auth.js"></script>
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
     <h1>Welcome to our App!</h1>
     
-    <div id="sign-in-container">
+    <div id="google-sign-in-container">
         <!-- Google Sign-In Button -->
-        <button id="google-sign-in">Sign in with Google</button>
+        <div id="google-signin-btn"></div>
     </div>
     
     <script type="module">
@@ -32,20 +33,32 @@
         const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
-        // Google Sign-In handler
-        const googleSignInButton = document.getElementById("google-sign-in");
+        // Initialize Google Sign-In button
+        window.onload = () => {
+            google.accounts.id.initialize({
+                client_id: '789022171426-82jp2174bbu0lcqrbc7c07qul0fu7oma.apps.googleusercontent.com',
+                callback: handleCredentialResponse
+            });
+            google.accounts.id.renderButton(
+                document.getElementById("google-signin-btn"),
+                {
+                    theme: "outline",
+                    size: "large",
+                }
+            );
+        }
 
-        googleSignInButton.addEventListener("click", () => {
-            const provider = new firebase.auth.GoogleAuthProvider();
-            auth.signInWithPopup(provider)
-                .then((result) => {
-                    // Redirect to dashboard after successful sign-in
-                    window.location.href = 'dashboard.html';
+        // Handle sign-in and redirection
+        function handleCredentialResponse(response) {
+            const credential = firebase.auth.GoogleAuthProvider.credential(response.credential);
+            auth.signInWithCredential(credential)
+                .then(() => {
+                    window.location.href = 'dashboard.html';  // Redirect to the dashboard
                 })
                 .catch((error) => {
                     console.log("Error signing in:", error.message);
                 });
-        });
+        }
     </script>
 </body>
 </html>

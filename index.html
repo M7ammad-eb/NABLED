@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Google Sign-In with Firebase</title>
 
-  <!-- Google API -->
+  <!-- Google Identity Services -->
   <script src="https://accounts.google.com/gsi/client" async defer></script>
 
-  <!-- Firebase SDKs -->
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth.js"></script>
+  <!-- Firebase SDK (No npm required) -->
+  <script src="https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js"></script>
 
   <style>
     body { font-family: Arial, sans-serif; text-align: center; margin-top: 50px; }
@@ -19,10 +19,7 @@
 </head>
 <body>
   <h2>Sign In with Google</h2>
-
-  <!-- Modern Google Sign-In Button -->
   <div id="signInDiv"></div>
-
   <script src="app.js"></script>
 </body>
 </html>

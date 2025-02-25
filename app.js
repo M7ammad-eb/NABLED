@@ -1,17 +1,24 @@
-// Firebase Configuration (Replace with your real Firebase keys)
-const firebaseConfig = {
-  apiKey: "AIzaSyAzgx1Ro6M7Bf58dgshk_7Eflp-EtZc9io",
-  authDomain: "nab-led.firebaseapp.com",
-  projectId: "nab-led",
-  storageBucket: "nab-led.firebasestorage.app",
-  messagingSenderId: "789022171426",
-  appId: "1:789022171426:web:2d8dda594b1495be26457b",
-  measurementId: "G-W58SF16RJ6"
-};
+// Import the functions you need from the SDKs you need
+  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+  import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-analytics.js";
+  // TODO: Add SDKs for Firebase products that you want to use
+  // https://firebase.google.com/docs/web/setup#available-libraries
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-const auth = firebase.auth();
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  const firebaseConfig = {
+    apiKey: "AIzaSyAzgx1Ro6M7Bf58dgshk_7Eflp-EtZc9io",
+    authDomain: "nab-led.firebaseapp.com",
+    projectId: "nab-led",
+    storageBucket: "nab-led.firebasestorage.app",
+    messagingSenderId: "789022171426",
+    appId: "1:789022171426:web:2d8dda594b1495be26457b",
+    measurementId: "G-W58SF16RJ6"
+  };
+
+  // Initialize Firebase
+  const app = initializeApp(firebaseConfig);
+  const analytics = getAnalytics(app);
 
 // Google Sign-In Button
 window.onload = function () {

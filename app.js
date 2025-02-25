@@ -16,7 +16,7 @@ const auth = firebase.auth();
 // Google Sign-In Button
 window.onload = function () {
   google.accounts.id.initialize({
-    client_id: "m7ammad.eb@gmail.com",
+    client_id: "789022171426-82jp2174bbu0lcqrbc7c07qul0fu7oma.apps.googleusercontent.com",
     callback: handleCredentialResponse
   });
 

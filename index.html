@@ -3,24 +3,72 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAB-LED</title>
-    <script src="https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js"></script>
-    <script src="app.js" defer></script>
+    <title>Google Sign-In</title>
+    <!-- Add Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-auth.js"></script>
 </head>
 <body>
-    <h1>Welcome to NAB-LED</h1>
-    <div id="login-container">
-        <div id="g_id_onload"
-             data-client_id="789022171426-82jp2174bbu0lcqrbc7c07qul0fu7oma.apps.googleusercontent.com"
-             data-callback="handleCredentialResponse"
-             data-auto_prompt="false">
-        </div>
-        <div class="g_id_signin" data-type="standard"></div>
+    <h1>Welcome to our App!</h1>
+    
+    <div id="sign-in-container">
+        <!-- Google Sign-In Button -->
+        <button id="google-sign-in">Sign in with Google</button>
     </div>
-    <button id="signOutBtn" style="display: none;">Sign Out</button>
-    <p id="user-info"></p>
+    
+    <div id="user-info" style="display:none;">
+        <h2 id="welcome-message"></h2>
+        <button id="sign-out-btn">Sign Out</button>
+    </div>
+    
+    <script type="module">
+        // Firebase configuration
+        const firebaseConfig = {
+            apiKey: "AIzaSyAzgx1Ro6M7Bf58dgshk_7Eflp-EtZc9io",
+            authDomain: "nab-led.firebaseapp.com",
+            projectId: "nab-led",
+            storageBucket: "nab-led.firebasestorage.app",
+            messagingSenderId: "789022171426",
+            appId: "1:789022171426:web:2d8dda594b1495be26457b",
+            measurementId: "G-W58SF16RJ6"
+        };
 
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
+        // Initialize Firebase
+        const app = firebase.initializeApp(firebaseConfig);
+        const auth = firebase.auth();
+
+        // Google Sign-In handler
+        const googleSignInButton = document.getElementById("google-sign-in");
+        const userInfoDiv = document.getElementById("user-info");
+        const signInContainer = document.getElementById("sign-in-container");
+        const welcomeMessage = document.getElementById("welcome-message");
+        const signOutButton = document.getElementById("sign-out-btn");
+
+        googleSignInButton.addEventListener("click", () => {
+            const provider = new firebase.auth.GoogleAuthProvider();
+            auth.signInWithPopup(provider)
+                .then((result) => {
+                    const user = result.user;
+                    welcomeMessage.innerText = `Hello, ${user.displayName}`;
+                    signInContainer.style.display = "none";
+                    userInfoDiv.style.display = "block";
+                    console.log("Signed in successfully");
+                })
+                .catch((error) => {
+                    console.log("Error signing in:", error.message);
+                });
+        });
+
+        // Handle Sign Out
+        signOutButton.addEventListener("click", () => {
+            auth.signOut().then(() => {
+                signInContainer.style.display = "block";
+                userInfoDiv.style.display = "none";
+                console.log("Signed out successfully");
+            }).catch((error) => {
+                console.log("Error signing out:", error.message);
+            });
+        });
+    </script>
 </body>
 </html>

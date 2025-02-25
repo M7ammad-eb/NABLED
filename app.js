@@ -18,24 +18,30 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth();
 const analytics = getAnalytics(app);
 
-// Sign in with Google
+// Get the sign-in button element
 const googleSignInButton = document.getElementById("google-sign-in");
 googleSignInButton.addEventListener("click", async () => {
   const provider = new GoogleAuthProvider();
   try {
-    await signInWithPopup(auth, provider);
+    const result = await signInWithPopup(auth, provider);
+    // User is signed in, let's check the user info
+    const user = result.user;
+    console.log("Signed in as:", user.displayName);
+    // After successful sign-in, handle UI updates or redirect
+    window.location.href = '/dashboard.html';  // Redirect to the next page (e.g., dashboard)
   } catch (error) {
-    console.error(error);
+    console.error("Error during sign-in:", error);
   }
 });
 
-// Listen to authentication state changes
+// Listen for auth state changes to track the user login status
 onAuthStateChanged(auth, (user) => {
   if (user) {
     console.log("User signed in:", user);
-    // Redirect to another page after login
+    // Redirect to the dashboard page if user is signed in
     window.location.href = '/dashboard.html';  // Change this to your desired page
   } else {
     console.log("User not signed in.");
+    // Optionally, show a login button or message here
   }
 });

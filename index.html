@@ -4,16 +4,16 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google Sign-In</title>
+    <!-- Firebase App (App Initialization) -->
     <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-auth.js"></script>
+    <!-- Google Identity Services for Google Sign-In -->
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
     <h1>Welcome to Our App!</h1>
-
     <div id="google-signin-container">
-        <!-- Google Sign-In Button -->
-        <div id="google-signin-btn"></div>
+        <!-- Google Sign-In Button will appear here -->
     </div>
 
     <script type="module">
@@ -29,17 +29,18 @@
         };
 
         // Initialize Firebase
-        firebase.initializeApp(firebaseConfig);
+        const app = firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
-        // Initialize Google Sign-In button
+        // Google Sign-In Button Initialization
         window.onload = () => {
             google.accounts.id.initialize({
                 client_id: '789022171426-82jp2174bbu0lcqrbc7c07qul0fu7oma.apps.googleusercontent.com',
                 callback: handleCredentialResponse
             });
+
             google.accounts.id.renderButton(
-                document.getElementById("google-signin-btn"),
+                document.getElementById("google-signin-container"),
                 {
                     theme: "outline",
                     size: "large",
@@ -47,12 +48,13 @@
             );
         };
 
-        // Handle sign-in and redirection
+        // Handle Google Sign-In response
         function handleCredentialResponse(response) {
             const credential = firebase.auth.GoogleAuthProvider.credential(response.credential);
             auth.signInWithCredential(credential)
                 .then(() => {
-                    window.location.href = 'dashboard.html';  // Redirect to the dashboard
+                    // Redirect to dashboard after successful sign-in
+                    window.location.href = 'dashboard.html';
                 })
                 .catch((error) => {
                     console.error("Error signing in:", error);

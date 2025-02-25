@@ -13,6 +13,9 @@ const firebaseConfig = {
 const app = firebase.initializeApp(firebaseConfig);
 const auth = firebase.auth();
 
+console.log("Firebase App initialized:", app);
+console.log("Firebase Auth initialized:", auth);
+
 // Google Sheets API Key and Spreadsheet ID (replace with your actual values)
 const googleSheetsApiKey = "YOUR_GOOGLE_SHEETS_API_KEY"; //You still need to add this and the sheet ID.
 const spreadsheetId = "YOUR_SPREADSHEET_ID"; //You still need to add this and the sheet ID.
@@ -20,17 +23,30 @@ const range = "Sheet1!A:Z"; // Adjust the range as needed
 
 // Get DOM elements
 const signInButton = document.getElementById("sign-in-button");
+const testButton = document.getElementById("test-button");
 const searchInput = document.getElementById("search-input");
 const searchButton = document.getElementById("search-button");
 
+console.log("signInButton:", signInButton);
+
 // Event listeners
-signInButton.addEventListener("click", signInWithGoogle);
+signInButton.addEventListener("click", () => {
+    console.log("Sign-in button event triggered!");
+    signInWithGoogle();
+});
+
+testButton.addEventListener("click", () => {
+    console.log("Test button clicked!");
+});
+
 searchButton.addEventListener("click", handleSearch);
 
 // Google Sign-In function
 async function signInWithGoogle() {
+  console.log("signInWithGoogle() function called");
   const provider = new firebase.auth.GoogleAuthProvider();
   try {
+    console.log("Attempting sign-in");
     await auth.signInWithPopup(provider);
     const user = auth.currentUser;
     console.log("User signed in:", user);

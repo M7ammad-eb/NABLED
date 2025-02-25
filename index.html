@@ -4,19 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google Sign-In</title>
-    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-auth.js"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
 <body>
-    <h1>Welcome to our App!</h1>
-    
-    <div id="google-sign-in-container">
+    <h1>Welcome to Our App!</h1>
+
+    <div id="google-signin-container">
         <!-- Google Sign-In Button -->
         <div id="google-signin-btn"></div>
     </div>
-    
+
     <script type="module">
         // Firebase configuration
         const firebaseConfig = {
@@ -30,7 +29,7 @@
         };
 
         // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
+        firebase.initializeApp(firebaseConfig);
         const auth = firebase.auth();
 
         // Initialize Google Sign-In button
@@ -46,7 +45,7 @@
                     size: "large",
                 }
             );
-        }
+        };
 
         // Handle sign-in and redirection
         function handleCredentialResponse(response) {
@@ -56,7 +55,7 @@
                     window.location.href = 'dashboard.html';  // Redirect to the dashboard
                 })
                 .catch((error) => {
-                    console.log("Error signing in:", error.message);
+                    console.error("Error signing in:", error);
                 });
         }
     </script>

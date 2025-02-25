@@ -10,7 +10,6 @@ const signInButton = document.getElementById('signInButton');
 if (signInButton) {
     signInButton.addEventListener('click', () => {
         console.log('Sign-In button clicked.');
-        const provider = new firebase.auth.GoogleAuthProvider();
         auth.signInWithPopup(provider)
             .then((result) => {
                 // Signed in successfully

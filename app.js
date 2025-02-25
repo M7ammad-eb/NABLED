@@ -1,8 +1,4 @@
-// Import the Firebase functions you need
-import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-
-// Firebase configuration (replace with your own keys)
+// Firebase Configuration (Replace with your real Firebase keys)
 const firebaseConfig = {
   apiKey: "AIzaSyAzgx1Ro6M7Bf58dgshk_7Eflp-EtZc9io",
   authDomain: "nab-led.firebaseapp.com",
@@ -14,11 +10,10 @@ const firebaseConfig = {
 };
 
 // Initialize Firebase
-const app = initializeApp(firebaseConfig);
-const auth = getAuth(app);
-const provider = new GoogleAuthProvider();
+firebase.initializeApp(firebaseConfig);
+const auth = firebase.auth();
 
-// Load Google's Identity Services SDK
+// Google Sign-In Button
 window.onload = function () {
   google.accounts.id.initialize({
     client_id: "YOUR_GOOGLE_CLIENT_ID", // Replace with your Google Client ID
@@ -27,17 +22,18 @@ window.onload = function () {
 
   google.accounts.id.renderButton(
     document.getElementById("signInDiv"),
-    { theme: "outline", size: "large" } // Customize button style
+    { theme: "outline", size: "large" }
   );
 
-  google.accounts.id.prompt(); // Automatically prompts the user to sign in
+  google.accounts.id.prompt();
 };
 
-// Handle Google Sign-In Response
+// Handle Google Sign-In
 function handleCredentialResponse(response) {
   console.log("Google Token ID:", response.credential);
 
-  signInWithPopup(auth, provider)
+  const provider = new firebase.auth.GoogleAuthProvider();
+  auth.signInWithPopup(provider)
     .then((result) => {
       const user = result.user;
       console.log("User signed in:", user.displayName, user.email);

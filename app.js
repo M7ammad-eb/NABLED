@@ -1,13 +1,13 @@
-// Import necessary Firebase modules
+// Import Firebase SDKs
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "firebase/auth";
 
-// Your Firebase config
+// Your web app's Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyAzgx1Ro6M7Bf58dgshk_7Eflp-EtZc9io",
   authDomain: "nab-led.firebaseapp.com",
   projectId: "nab-led",
-  storageBucket: "nab-led.firebasestorage.app",
+  storageBucket: "nab-led.appspot.com",
   messagingSenderId: "789022171426",
   appId: "1:789022171426:web:2d8dda594b1495be26457b",
   measurementId: "G-W58SF16RJ6"
@@ -15,25 +15,60 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-
-// Firebase Authentication
 const auth = getAuth(app);
-
-// Google Sign-In provider
 const provider = new GoogleAuthProvider();
 
-const signInWithGoogle = () => {
+// Function to handle Google Sign-In
+function signInWithGoogle() {
   signInWithPopup(auth, provider)
     .then((result) => {
       const user = result.user;
-      console.log('Logged in as:', user.email);
-      // Use user.email to determine the branch and fetch specific pricing
+      console.log("User signed in: ", user);
+      document.getElementById("user-info").textContent = `Signed in as: ${user.displayName}`;
+      toggleSignInUI(false); // Hide the sign-in button after success
     })
     .catch((error) => {
-      console.error('Error during sign-in:', error);
+      console.error("Error signing in: ", error.message);
     });
-};
+}
 
-// Add event listener to the button
-const signInButton = document.getElementById("google-sign-in-button");
-signInButton.addEventListener("click", signInWithGoogle);
+// Function to sign out the user
+function signOutUser() {
+  signOut(auth)
+    .then(() => {
+      console.log("User signed out.");
+      document.getElementById("user-info").textContent = "";
+      toggleSignInUI(true); // Show the sign-in button again
+    })
+    .catch((error) => {
+      console.error("Error signing out: ", error.message);
+    });
+}
+
+// Function to toggle UI elements based on sign-in state
+function toggleSignInUI(isSignedIn) {
+  if (isSignedIn) {
+    document.getElementById("sign-in-btn").style.display = "block";
+    document.getElementById("sign-out-btn").style.display = "none";
+  } else {
+    document.getElementById("sign-in-btn").style.display = "none";
+    document.getElementById("sign-out-btn").style.display = "block";
+  }
+}
+
+// Check the user's sign-in status
+onAuthStateChanged(auth, (user) => {
+  if (user) {
+    document.getElementById("user-info").textContent = `Signed in as: ${user.displayName}`;
+    toggleSignInUI(false);
+  } else {
+    document.getElementById("user-info").textContent = "";
+    toggleSignInUI(true);
+  }
+});
+
+// Event listener for the sign-in button
+document.getElementById("sign-in-btn").addEventListener("click", signInWithGoogle);
+
+// Event listener for the sign-out button
+document.getElementById("sign-out-btn").addEventListener("click", signOutUser);

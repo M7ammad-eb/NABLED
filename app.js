@@ -1,8 +1,8 @@
-// Import the functions you need from the Firebase SDK
+// Import the Firebase functions you need
 import { initializeApp } from "firebase/app";
 import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
-// Firebase configuration (replace with your actual Firebase config)
+// Firebase configuration (replace with your own keys)
 const firebaseConfig = {
   apiKey: "AIzaSyAzgx1Ro6M7Bf58dgshk_7Eflp-EtZc9io",
   authDomain: "nab-led.firebaseapp.com",
@@ -18,33 +18,31 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-// Handle Google sign-in
-function onSignIn(googleUser) {
-  const profile = googleUser.getBasicProfile();
-  const user = googleUser.getAuthResponse();
-  
-  console.log("ID: " + profile.getId());
-  console.log("Name: " + profile.getName());
-  console.log("Image URL: " + profile.getImageUrl());
-  console.log("Email: " + profile.getEmail());
-  
-  // If you'd like to store the user data in Firebase Auth:
+// Load Google's Identity Services SDK
+window.onload = function () {
+  google.accounts.id.initialize({
+    client_id: "YOUR_GOOGLE_CLIENT_ID", // Replace with your Google Client ID
+    callback: handleCredentialResponse
+  });
+
+  google.accounts.id.renderButton(
+    document.getElementById("signInDiv"),
+    { theme: "outline", size: "large" } // Customize button style
+  );
+
+  google.accounts.id.prompt(); // Automatically prompts the user to sign in
+};
+
+// Handle Google Sign-In Response
+function handleCredentialResponse(response) {
+  console.log("Google Token ID:", response.credential);
+
   signInWithPopup(auth, provider)
     .then((result) => {
       const user = result.user;
-      console.log("User signed in:", user);
-      // You can now store user data in your app (e.g., save in a database)
+      console.log("User signed in:", user.displayName, user.email);
     })
     .catch((error) => {
-      console.error("Error signing in:", error.message);
+      console.error("Sign-in error:", error.message);
     });
 }
-
-// Optional: You can listen for state changes and sign out if needed
-auth.onAuthStateChanged(function(user) {
-  if (user) {
-    console.log("Signed in as:", user.displayName);
-  } else {
-    console.log("User not signed in.");
-  }
-});

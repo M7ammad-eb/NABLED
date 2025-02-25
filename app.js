@@ -1,8 +1,9 @@
+// Import necessary Firebase SDKs
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
 import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
 import { getAnalytics } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-analytics.js";
 
-// Firebase configuration
+// Firebase configuration object
 const firebaseConfig = {
   apiKey: "AIzaSyAzgx1Ro6M7Bf58dgshk_7Eflp-EtZc9io",
   authDomain: "nab-led.firebaseapp.com",
@@ -15,33 +16,37 @@ const firebaseConfig = {
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
-const auth = getAuth();
+const auth = getAuth(app);
 const analytics = getAnalytics(app);
 
-// Get the sign-in button element
-const googleSignInButton = document.getElementById("google-sign-in");
+// Set up Google Sign-In button
+const googleSignInButton = document.getElementById('google-sign-in-btn');
+
+// Sign-In with Google function
 googleSignInButton.addEventListener("click", async () => {
   const provider = new GoogleAuthProvider();
   try {
     const result = await signInWithPopup(auth, provider);
-    // User is signed in, let's check the user info
     const user = result.user;
-    console.log("Signed in as:", user.displayName);
-    // After successful sign-in, handle UI updates or redirect
-    window.location.href = '/dashboard.html';  // Redirect to the next page (e.g., dashboard)
+
+    console.log("User signed in:", user);
+    alert("Signed in as: " + user.displayName);
+
+    // Redirect to another page upon successful login
+    window.location.href = '/dashboard.html';  // Redirect to the dashboard page
+
   } catch (error) {
     console.error("Error during sign-in:", error);
   }
 });
 
-// Listen for auth state changes to track the user login status
+// Check for user authentication state
 onAuthStateChanged(auth, (user) => {
   if (user) {
-    console.log("User signed in:", user);
-    // Redirect to the dashboard page if user is signed in
-    window.location.href = '/dashboard.html';  // Change this to your desired page
+    console.log("User signed in: ", user);
+    alert("User signed in: " + user.displayName);
+    window.location.href = '/dashboard.html';  // Redirect to another page if already signed in
   } else {
-    console.log("User not signed in.");
-    // Optionally, show a login button or message here
+    console.log("No user is signed in.");
   }
 });

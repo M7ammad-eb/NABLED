@@ -3,63 +3,67 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Google Sign-In</title>
-    <!-- Firebase App (App Initialization) -->
-    <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-auth.js"></script>
-    <!-- Google Identity Services for Google Sign-In -->
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <title>Item Price App</title>
+    <link rel="manifest" href="manifest.json">
+    <style>
+        body {
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .logo {
+            max-width: 200px;
+            margin-bottom: 20px;
+        }
+
+        .search-container {
+            display: flex;
+            margin-bottom: 20px;
+        }
+
+        #search-input {
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px 0 0 4px;
+            width: 300px;
+        }
+
+        #search-button {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 0 4px 4px 0;
+            cursor: pointer;
+        }
+
+        #sign-in-button {
+            padding: 10px 20px;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-bottom: 20px;
+        }
+
+    </style>
 </head>
 <body>
-    <h1>Welcome to Our App!</h1>
-    <div id="google-signin-container">
-        <!-- Google Sign-In Button will appear here -->
+    <img src="logo.png" alt="Company Logo" class="logo">
+    <button id="sign-in-button">Sign In with Google</button>
+    <div class="search-container">
+        <input type="text" id="search-input" placeholder="Enter Item ID or Name">
+        <button id="search-button">Search</button>
     </div>
 
-    <script type="module">
-        // Firebase configuration
-        const firebaseConfig = {
-            apiKey: "AIzaSyAzgx1Ro6M7Bf58dgshk_7Eflp-EtZc9io",
-            authDomain: "nab-led.firebaseapp.com",
-            projectId: "nab-led",
-            storageBucket: "nab-led.firebasestorage.app",
-            messagingSenderId: "789022171426",
-            appId: "1:789022171426:web:2d8dda594b1495be26457b",
-            measurementId: "G-W58SF16RJ6"
-        };
-
-        // Initialize Firebase
-        const app = firebase.initializeApp(firebaseConfig);
-        const auth = firebase.auth();
-
-        // Google Sign-In Button Initialization
-        window.onload = () => {
-            google.accounts.id.initialize({
-                client_id: '789022171426-82jp2174bbu0lcqrbc7c07qul0fu7oma.apps.googleusercontent.com',
-                callback: handleCredentialResponse
-            });
-
-            google.accounts.id.renderButton(
-                document.getElementById("google-signin-container"),
-                {
-                    theme: "outline",
-                    size: "large",
-                }
-            );
-        };
-
-        // Handle Google Sign-In response
-        function handleCredentialResponse(response) {
-            const credential = firebase.auth.GoogleAuthProvider.credential(response.credential);
-            auth.signInWithCredential(credential)
-                .then(() => {
-                    // Redirect to dashboard after successful sign-in
-                    window.location.href = 'dashboard.html';
-                })
-                .catch((error) => {
-                    console.error("Error signing in:", error);
-                });
-        }
-    </script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/9.6.1/firebase-auth-compat.js"></script>
+    <script src="app.js"></script>
 </body>
 </html>

@@ -3,24 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NAB-LED</title>
-    <script src="https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js"></script>
-    <script src="app.js" defer></script>
+    <title>Sign-In with Google</title>
+    <script type="module" src="app.js"></script>
 </head>
 <body>
-    <h1>Welcome to NAB-LED</h1>
-    <div id="login-container">
-        <div id="g_id_onload"
-             data-client_id="789022171426-82jp2174bbu0lcqrbc7c07qul0fu7oma.apps.googleusercontent.com"
-             data-callback="handleCredentialResponse"
-             data-auto_prompt="false">
-        </div>
-        <div class="g_id_signin" data-type="standard"></div>
-    </div>
-    <button id="signOutBtn" style="display: none;">Sign Out</button>
-    <p id="user-info"></p>
+    <h2>Welcome to the Google Sign-In App</h2>
 
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <button id="google-sign-in-btn">Sign In with Google</button>
+
 </body>
 </html>

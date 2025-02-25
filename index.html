@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Google Sign-In</title>
-    <!-- Add Firebase SDK -->
+    <!-- Firebase SDK -->
     <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/9.8.4/firebase-auth.js"></script>
 </head>
@@ -14,11 +14,6 @@
     <div id="sign-in-container">
         <!-- Google Sign-In Button -->
         <button id="google-sign-in">Sign in with Google</button>
-    </div>
-    
-    <div id="user-info" style="display:none;">
-        <h2 id="welcome-message"></h2>
-        <button id="sign-out-btn">Sign Out</button>
     </div>
     
     <script type="module">
@@ -39,35 +34,17 @@
 
         // Google Sign-In handler
         const googleSignInButton = document.getElementById("google-sign-in");
-        const userInfoDiv = document.getElementById("user-info");
-        const signInContainer = document.getElementById("sign-in-container");
-        const welcomeMessage = document.getElementById("welcome-message");
-        const signOutButton = document.getElementById("sign-out-btn");
 
         googleSignInButton.addEventListener("click", () => {
             const provider = new firebase.auth.GoogleAuthProvider();
             auth.signInWithPopup(provider)
                 .then((result) => {
-                    const user = result.user;
-                    welcomeMessage.innerText = `Hello, ${user.displayName}`;
-                    signInContainer.style.display = "none";
-                    userInfoDiv.style.display = "block";
-                    console.log("Signed in successfully");
+                    // Redirect to dashboard after successful sign-in
+                    window.location.href = 'dashboard.html';
                 })
                 .catch((error) => {
                     console.log("Error signing in:", error.message);
                 });
-        });
-
-        // Handle Sign Out
-        signOutButton.addEventListener("click", () => {
-            auth.signOut().then(() => {
-                signInContainer.style.display = "block";
-                userInfoDiv.style.display = "none";
-                console.log("Signed out successfully");
-            }).catch((error) => {
-                console.log("Error signing out:", error.message);
-            });
         });
     </script>
 </body>

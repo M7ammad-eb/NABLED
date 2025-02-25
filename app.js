@@ -1,13 +1,13 @@
-// Import Firebase SDKs
+// Import the functions you need from the Firebase SDK
 import { initializeApp } from "firebase/app";
-import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "firebase/auth";
+import { getAuth, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 
-// Your web app's Firebase configuration
+// Firebase configuration (replace with your actual Firebase config)
 const firebaseConfig = {
   apiKey: "AIzaSyAzgx1Ro6M7Bf58dgshk_7Eflp-EtZc9io",
   authDomain: "nab-led.firebaseapp.com",
   projectId: "nab-led",
-  storageBucket: "nab-led.appspot.com",
+  storageBucket: "nab-led.firebasestorage.app",
   messagingSenderId: "789022171426",
   appId: "1:789022171426:web:2d8dda594b1495be26457b",
   measurementId: "G-W58SF16RJ6"
@@ -18,57 +18,33 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const provider = new GoogleAuthProvider();
 
-// Function to handle Google Sign-In
-function signInWithGoogle() {
+// Handle Google sign-in
+function onSignIn(googleUser) {
+  const profile = googleUser.getBasicProfile();
+  const user = googleUser.getAuthResponse();
+  
+  console.log("ID: " + profile.getId());
+  console.log("Name: " + profile.getName());
+  console.log("Image URL: " + profile.getImageUrl());
+  console.log("Email: " + profile.getEmail());
+  
+  // If you'd like to store the user data in Firebase Auth:
   signInWithPopup(auth, provider)
     .then((result) => {
       const user = result.user;
-      console.log("User signed in: ", user);
-      document.getElementById("user-info").textContent = `Signed in as: ${user.displayName}`;
-      toggleSignInUI(false); // Hide the sign-in button after success
+      console.log("User signed in:", user);
+      // You can now store user data in your app (e.g., save in a database)
     })
     .catch((error) => {
-      console.error("Error signing in: ", error.message);
+      console.error("Error signing in:", error.message);
     });
 }
 
-// Function to sign out the user
-function signOutUser() {
-  signOut(auth)
-    .then(() => {
-      console.log("User signed out.");
-      document.getElementById("user-info").textContent = "";
-      toggleSignInUI(true); // Show the sign-in button again
-    })
-    .catch((error) => {
-      console.error("Error signing out: ", error.message);
-    });
-}
-
-// Function to toggle UI elements based on sign-in state
-function toggleSignInUI(isSignedIn) {
-  if (isSignedIn) {
-    document.getElementById("sign-in-btn").style.display = "block";
-    document.getElementById("sign-out-btn").style.display = "none";
-  } else {
-    document.getElementById("sign-in-btn").style.display = "none";
-    document.getElementById("sign-out-btn").style.display = "block";
-  }
-}
-
-// Check the user's sign-in status
-onAuthStateChanged(auth, (user) => {
+// Optional: You can listen for state changes and sign out if needed
+auth.onAuthStateChanged(function(user) {
   if (user) {
-    document.getElementById("user-info").textContent = `Signed in as: ${user.displayName}`;
-    toggleSignInUI(false);
+    console.log("Signed in as:", user.displayName);
   } else {
-    document.getElementById("user-info").textContent = "";
-    toggleSignInUI(true);
+    console.log("User not signed in.");
   }
 });
-
-// Event listener for the sign-in button
-document.getElementById("sign-in-btn")?.addEventListener("click", signInWithGoogle);
-
-// Event listener for the sign-out button
-document.getElementById("sign-out-btn")?.addEventListener("click", signOutUser);

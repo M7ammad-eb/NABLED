@@ -38,11 +38,8 @@ fetch("https://script.google.com/macros/s/AKfycbxGxq-ym-vVPn46L8_3wx0xauUMFgq42N
     "Content-Type": "application/json"
   }
 })
-.then(response => response.json())
-.then(data => {
-  console.log("Data received:", data);
-  displayData(data);// Update your UI with the data
-})
+.then(res => res.json())
+.then(res => console.log(res));
 .catch(error => console.error("Error fetching data:", error));
 
 

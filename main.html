@@ -9,32 +9,7 @@
             font-family: Arial, sans-serif;
             text-align: center;
             padding: 2rem;
-        }
-        .search-container {
-            margin-bottom: 2rem;
-        }
-        .search-box {
-            padding: 10px;
-            font-size: 16px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .search-button {
-            padding: 10px 20px;
-            font-size: 16px;
-            background-color: #4285f4;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        .item {
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            padding: 1rem;
-            margin: 1rem auto;
-            max-width: 400px;
-            text-align: left;
+            background-color: #f8f9fa;
         }
         .sign-out-button {
             background-color: #dc3545;
@@ -44,26 +19,29 @@
             font-size: 16px;
             border-radius: 4px;
             cursor: pointer;
+            margin-bottom: 20px;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: white;
+            margin-top: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+        th, td {
+            padding: 10px;
+            border: 1px solid #ddd;
+        }
+        th {
+            background-color: #007bff;
+            color: white;
         }
     </style>
 </head>
 <body>
     <h1>Welcome to the Main App</h1>
-    <p>You are now signed in.</p>
-
-    <!-- Search Box -->
-    <div class="search-container">
-        <input type="text" id="searchBox" class="search-box" placeholder="Enter Item ID or Name">
-        <button id="searchButton" class="search-button">Search</button>
-    </div>
-
-    <!-- Item List -->
-    <div id="itemList"></div>
-
-    <!-- Sign Out Button -->
     <button id="signOutButton" class="sign-out-button">Sign Out</button>
-
-    <!-- Firebase and Scripts -->
+    <div id="data-container"></div>
     <script type="module" src="main.js"></script>
 </body>
 </html>

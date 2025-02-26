@@ -31,7 +31,7 @@ if (signOutButton) {
 }
 
 // Fetch Google Sheets data (replace with your Google Apps Script URL)
-fetch("https://script.google.com/macros/s/AKfycbwB2p9HSEbNrObDDh_0Hmg3MWDfPjyJ2dJaZFDE0gU0Iz4uzmwhJGX2vLsu0Law8nJB5A/exec", {
+fetch("https://script.google.com/macros/s/AKfycbyLSZzBPNCVrvAw9DbfnuGXG2IEfwvD6AliOH6e0Swoqn-cslyY4qfG6lq2yn2PhQcAgQ/exec", {
   method: "GET",
   headers: {
     "Content-Type": "application/json"
@@ -40,10 +40,9 @@ fetch("https://script.google.com/macros/s/AKfycbwB2p9HSEbNrObDDh_0Hmg3MWDfPjyJ2d
 .then(response => response.json())
 .then(data => {
   console.log("Data received:", data);
-  // Display the fetched data
-  displayData(data);
+  // Update your UI with the data
 })
-.catch(error => console.error("Fetch error:", error));
+.catch(error => console.error("Error fetching data:", error));
 
 // Function to display the data in a table
 function displayData(data) {

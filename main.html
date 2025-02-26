@@ -10,6 +10,24 @@
             text-align: center;
             padding: 2rem;
         }
+        .search-container {
+            margin-bottom: 2rem;
+        }
+        .search-box {
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        .search-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #4285f4;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
         .sign-out-button {
             background-color: #dc3545;
             color: white;
@@ -24,10 +42,20 @@
 <body>
     <h1>Welcome to the Main App</h1>
     <p>You are now signed in.</p>
+
+    <!-- Search Box -->
+    <div class="search-container">
+        <input type="text" id="searchBox" class="search-box" placeholder="Enter Item ID or Name">
+        <button id="searchButton" class="search-button">Search</button>
+    </div>
+
+    <!-- Item List -->
+    <div id="itemList"></div>
+
     <!-- Sign Out Button -->
     <button id="signOutButton" class="sign-out-button">Sign Out</button>
 
-    <!-- Firebase and Sign-Out Scripts -->
+    <!-- Firebase and Scripts -->
     <script type="module" src="main.js"></script>
 </body>
 </html>

@@ -32,18 +32,19 @@ if (signOutButton) {
 
 
 // Fetsh Google sheets data
-document.addEventListener("DOMContentLoaded", () => {
-    const dataContainer = document.createElement("div");
-    dataContainer.id = "data-container";
-    document.body.appendChild(dataContainer);
+fetch("https://script.google.com/macros/s/AKfycbysGgGsp5L9hY5Hj1IcdosM_nHFIIfoJMzn6hVP_2IfJ6vxCW8hOCz3BdKEIyX_d6fN9A/exec", {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json"
+  }
+})
+.then(response => response.json())
+.then(data => {
+  console.log("Data received:", data);
+  // Update your UI with the data
+})
+.catch(error => console.error("Error fetching data:", error));
 
-    fetch("https://script.google.com/macros/s/AKfycbysGgGsp5L9hY5Hj1IcdosM_nHFIIfoJMzn6hVP_2IfJ6vxCW8hOCz3BdKEIyX_d6fN9A/exec")
-        .then(response => response.json())
-        .then(data => {
-            console.log("Data from Google Sheets:", data);
-            displayData(data);
-        })
-        .catch(error => console.error("Error fetching data:", error));
 });
 
 function displayData(data) {

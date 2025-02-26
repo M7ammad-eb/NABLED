@@ -2,7 +2,7 @@
 function loadGoogleAPI() {
     gapi.load("client:auth2", () => {
         gapi.client.init({
-            apiKey: "AIzaSyBeEM1BCOVVIS9MNur7GsTT9NVymQSC3O0", // Optional, if needed
+            apiKey: "YOUR_API_KEY", // Optional, if needed
             clientId: "789022171426-oohp7v5so6ssupr50s3ppss0nl4cg9nm.apps.googleusercontent.com", // Replace with your OAuth Client ID
             discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
             scope: "https://www.googleapis.com/auth/spreadsheets.readonly" // Only read access
@@ -79,16 +79,13 @@ function displayData(data) {
     }
 }
 
-// Load the Google API client library and initialize everything
-function initApp() {
-    loadGoogleAPI();
-}
-
 // Handle sign-out functionality (optional)
 function signOut() {
     const authInstance = gapi.auth2.getAuthInstance();
     authInstance.signOut().then(() => {
         console.log("User signed out.");
+        // Optionally, reload the page after sign-out to show the sign-in button
+        location.reload();
     }).catch(error => {
         console.error("Error signing out:", error);
     });
@@ -98,5 +95,5 @@ function signOut() {
 document.getElementById("signInButton").addEventListener("click", signIn);
 document.getElementById("signOutButton").addEventListener("click", signOut);
 
-// Initialize the app once the page is loaded
-window.onload = initApp;
+// Load the Google API client library and initialize everything
+window.onload = loadGoogleAPI;

@@ -83,3 +83,46 @@ if (signOutButton) {
 } else {
     console.error('Sign-Out button not found.');
 }
+// Display items in the app
+function displayItems(items) {
+    const itemList = document.getElementById('itemList');
+    itemList.innerHTML = items.map(item => `
+        <div class="item" data-id="${item.ID}">
+            <h3>${item.Name}</h3>
+            <p>ID: ${item.ID}</p>
+            <p>Price: ${item.Price}</p>
+        </div>
+    `).join('');
+
+    // Add click event listeners to items
+    document.querySelectorAll('.item').forEach(item => {
+        item.addEventListener('click', () => {
+            const itemId = item.getAttribute('data-id');
+            const selectedItem = items.find(i => i.ID === itemId);
+            displayItemDetails(selectedItem);
+        });
+    });
+}
+
+// Display item details
+function displayItemDetails(item) {
+    const itemList = document.getElementById('itemList');
+    itemList.innerHTML = `
+        <div class="item-details">
+            <h2>${item.Name}</h2>
+            <p>ID: ${item.ID}</p>
+            <img src="${item.Image}" alt="${item.Name}">
+            <p>Description: ${item.Description}</p>
+            <p>Price: ${item.Price}</p>
+            <button id="backButton">Back</button>
+        </div>
+    `;
+
+    // Add back button functionality
+    const backButton = document.getElementById('backButton');
+    if (backButton) {
+        backButton.addEventListener('click', () => {
+            displayItems(items);
+        });
+    }
+}

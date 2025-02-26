@@ -1,16 +1,37 @@
+// Import Firebase modules
+import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
+import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+
+// Firebase configuration
+const firebaseConfig = {
+    apiKey: "AIzaSyAzgx1Ro6M7Bf58dgshk_7Eflp-EtZc9io",
+    authDomain: "nab-led.firebaseapp.com",
+    projectId: "nab-led",
+    storageBucket: "nab-led.firebasestorage.app",
+    messagingSenderId: "789022171426",
+    appId: "1:789022171426:web:2d8dda594b1495be26457b",
+    measurementId: "G-W58SF16RJ6"
+};
+
+// Initialize Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+
+// Google Sign-In Provider Configuration
+const provider = new GoogleAuthProvider();
+provider.setCustomParameters({
+    prompt: 'select_account' // Forces account selection even if one account is available
+});
+
 // Check if Firebase is initialized
-if (!firebase.apps.length) {
-    console.error('Firebase is not initialized.');
-} else {
-    console.log('Firebase is initialized.');
-}
+console.log('Firebase initialized:', app);
 
 // Google Sign-In
 const signInButton = document.getElementById('signInButton');
 if (signInButton) {
     signInButton.addEventListener('click', () => {
         console.log('Sign-In button clicked.'); // Debugging: Check if this logs
-        auth.signInWithPopup(provider)
+        signInWithPopup(auth, provider)
             .then((result) => {
                 // Signed in successfully
                 const user = result.user;
@@ -29,7 +50,7 @@ if (signInButton) {
 }
 
 // Check if the user is already signed in
-auth.onAuthStateChanged((user) => {
+onAuthStateChanged(auth, (user) => {
     if (user) {
         // User is signed in, redirect to the main app page
         console.log('User is already signed in:', user.displayName);

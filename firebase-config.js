@@ -1,4 +1,4 @@
-// Firebase configuration
+// Firebase configuration 
 const firebaseConfig = {
     apiKey: "AIzaSyAzgx1Ro6M7Bf58dgshk_7Eflp-EtZc9io",
     authDomain: "nab-led.firebaseapp.com",

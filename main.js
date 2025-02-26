@@ -8,6 +8,7 @@ function loadGoogleAPI() {
             scope: "https://www.googleapis.com/auth/spreadsheets.readonly" // Only read access
         }).then(() => {
             console.log("Google API initialized successfully");
+
             // Check if the user is already signed in
             const authInstance = gapi.auth2.getAuthInstance();
             if (authInstance.isSignedIn.get()) {
@@ -40,14 +41,19 @@ function fetchData() {
     const sheetId = "1lxjoly4fuuRLEycqsfeRMm-uB5XdRbFkxC5JqlgtXn8"; // Replace with your actual Sheet ID
     const range = "Inventory"; // Specify the range you want to access
 
-    gapi.client.sheets.spreadsheets.values.get({
-        spreadsheetId: sheetId,
-        range: range
-    }).then(response => {
-        console.log("Data retrieved from Google Sheets:", response.result.values);
-        displayData(response.result.values); // Display data in your app
+    // Ensure user is authenticated before making the request
+    gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().then(authResponse => {
+        gapi.client.sheets.spreadsheets.values.get({
+            spreadsheetId: sheetId,
+            range: range
+        }).then(response => {
+            console.log("Data retrieved from Google Sheets:", response.result.values);
+            displayData(response.result.values); // Display data in your app
+        }).catch(error => {
+            console.error("Error fetching data from Google Sheets:", error);
+        });
     }).catch(error => {
-        console.error("Error fetching data from Google Sheets:", error);
+        console.error("Error fetching authentication response:", error);
     });
 }
 

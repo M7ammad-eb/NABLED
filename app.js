@@ -9,7 +9,7 @@ if (!firebase.apps.length) {
 const signInButton = document.getElementById('signInButton');
 if (signInButton) {
     signInButton.addEventListener('click', () => {
-        console.log('Sign-In button clicked.');
+        console.log('Sign-In button clicked.'); // Debugging: Check if this logs
         auth.signInWithPopup(provider)
             .then((result) => {
                 // Signed in successfully

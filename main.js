@@ -37,8 +37,8 @@ function signIn() {
 
 // Fetch data from Google Sheets
 function fetchData() {
-    const sheetId = "YOUR_SHEET_ID"; // Replace with your actual Sheet ID
-    const range = "Sheet1!A1:D10"; // Specify the range you want to access
+    const sheetId = "1lxjoly4fuuRLEycqsfeRMm-uB5XdRbFkxC5JqlgtXn8"; // Replace with your actual Sheet ID
+    const range = "Inventory"; // Specify the range you want to access
 
     gapi.client.sheets.spreadsheets.values.get({
         spreadsheetId: sheetId,

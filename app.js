@@ -17,14 +17,14 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 
+// Log Firebase initialization
+console.log('Firebase initialized:', app);
+
 // Google Sign-In Provider Configuration
 const provider = new GoogleAuthProvider();
 provider.setCustomParameters({
     prompt: 'select_account' // Forces account selection even if one account is available
 });
-
-// Check if Firebase is initialized
-console.log('Firebase initialized:', app);
 
 // Google Sign-In
 const signInButton = document.getElementById('signInButton');

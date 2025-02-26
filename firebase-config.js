@@ -18,3 +18,6 @@ const provider = new firebase.auth.GoogleAuthProvider();
 provider.setCustomParameters({
     prompt: 'select_account' // Forces account selection even if one account is available
 });
+
+// Log Firebase initialization
+console.log('Firebase initialized:', app);

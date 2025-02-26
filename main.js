@@ -32,7 +32,7 @@ if (signOutButton) {
 
 
 // Fetsh Google sheets data
-fetch("https://script.google.com/macros/s/AKfycbysGgGsp5L9hY5Hj1IcdosM_nHFIIfoJMzn6hVP_2IfJ6vxCW8hOCz3BdKEIyX_d6fN9A/exec", {
+fetch("https://script.google.com/macros/s/AKfycbydRjWrkVCJmfGgAjh-38B04FPm55aeQn5SmPWWlLfposO_MgrsX71NME8hUHIXpGkS-A/exec", {
   method: "GET",
   headers: {
     "Content-Type": "application/json"

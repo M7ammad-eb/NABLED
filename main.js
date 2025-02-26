@@ -31,7 +31,7 @@ if (signOutButton) {
 }
 
 // Fetch Google Sheets data (replace with your Google Apps Script URL)
-fetch("https://script.google.com/macros/s/AKfycbyCC5U-SLxTKN3fqbpRDAtJWLfqRNav1NqiDza4iiqblyHEBrquTxHoQK1a-sYwJxa_dw/exec", {
+fetch("https://script.google.com/macros/s/AKfycbzihfnUmpu1nWV8b5w7wPAKvThkeHzutmhHO8wE0ih6T1Y26rJmWbDJaWTZCxrZjwd6Gw/exec", {
   method: "GET",
   headers: {
     "Content-Type": "application/json"

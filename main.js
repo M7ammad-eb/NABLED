@@ -40,7 +40,8 @@ fetch("https://script.google.com/macros/s/AKfycbyxxp42FAt73VYqCzE1r7DiVDyscilJ8N
 })
 .then(response => response.json())
 .then(data => {
-  console.log("Data received:", data);
+    console.log("Data received:", data);
+    displayData(data);
   // Update your UI with the data
 })
 .catch(error => console.error("Error fetching data:", error));

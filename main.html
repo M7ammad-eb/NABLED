@@ -3,47 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Main App</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            text-align: center;
-            padding: 2rem;
-            background-color: #f8f9fa;
-        }
-        .sign-out-button {
-            background-color: #dc3545;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            border-radius: 4px;
-            cursor: pointer;
-            margin-bottom: 20px;
-        }
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            margin-top: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-        th, td {
-            padding: 10px;
-            border: 1px solid #ddd;
-        }
-        th {
-            background-color: #007bff;
-            color: white;
-        }
-    </style>
+    <title>Google Sheets OAuth 2.0 Example</title>
 </head>
 <body>
-    <h1>Welcome to the Main App</h1>
-    <button id="signOutButton" class="sign-out-button">Sign Out</button>
-    <div id="data-container"></div>
-    <script type="module" src="main.js"></script>
+    <h1>Welcome to the Google Sheets App</h1>
+
+    <!-- Sign In Button -->
+    <button id="signInButton">Sign In with Google</button>
+    
+    <!-- Data Container -->
+    <div id="dataContainer"></div>
+    
+    <!-- Sign Out Button (optional) -->
+    <button id="signOutButton">Sign Out</button>
+
+    <!-- Google API Script -->
     <script src="https://apis.google.com/js/api.js"></script>
     <script src="https://accounts.google.com/gsi/client" async defer></script>
+    
+    <!-- Your main.js script -->
+    <script src="main.js"></script>
 </body>
 </html>

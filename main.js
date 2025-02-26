@@ -31,23 +31,25 @@ if (signOutButton) {
 }
 
 // Fetch Google Sheets data (replace with your Google Apps Script URL)
-fetch("https://script.google.com/macros/s/AKfycbzFjy6L9kfeGg50VfQdna7zQR6K4AoOQPq3VNYhdqD6vU_Q9ldClZMC2Vb2DP1EP9fF/exec", { //USE YOUR WEB APP URL
-    method: "GET", // GET is the default, you can omit this line
-    // headers: {  // You don't need this for a simple GET
-    //   "Content-Type": "application/json"
-    // }
+fetch('https://script.google.com/macros/s/AKfycbyxxp42FAt73VYqCzE1r7DiVDyscilJ8NbRi2B-SKj23aIxwnMuTGdtOQO7NIg1FwcFwQ/exec', {
+    method: 'GET',
+    headers: {
+        'Accept': 'application/json',
+    }
 })
 .then(response => {
-  if (!response.ok) {
-        throw new Error(`HTTP error! status: ${response.status}`); //BEST PRACTICE - Check for errors
-  }
-  return response.json();
+    if (!response.ok) {
+        throw new Error(`HTTP error! Status: ${response.status}`);
+    }
+    return response.json();
 })
 .then(data => {
     console.log("Data received:", data);
-    displayData(data); // Call displayData *after* data is received
 })
-.catch(error => console.error("Error fetching data:", error));
+.catch(error => {
+    console.error("Error fetching data:", error);
+});
+
 
 // Function to display the data in a table
 function displayData(data) {

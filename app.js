@@ -1,71 +1,102 @@
-// Import Firebase modules
-import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-app.js";
-import { getAuth, signInWithPopup, GoogleAuthProvider, onAuthStateChanged } from "https://www.gstatic.com/firebasejs/11.3.1/firebase-auth.js";
+// Google Sign-In Configuration
+const CLIENT_ID = "YOUR_GOOGLE_OAUTH_CLIENT_ID"; // Replace with your Google OAuth Client ID
 
-// Firebase configuration
-const firebaseConfig = {
-    apiKey: "AIzaSyAzgx1Ro6M7Bf58dgshk_7Eflp-EtZc9io",
-    authDomain: "nab-led.firebaseapp.com",
-    projectId: "nab-led",
-    storageBucket: "nab-led.firebasestorage.app",
-    messagingSenderId: "789022171426",
-    appId: "1:789022171426:web:2d8dda594b1495be26457b",
-    measurementId: "G-W58SF16RJ6"
-};
+// Initialize Google API client library
+function loadGoogleAPI() {
+    gapi.load("client:auth2", () => {
+        gapi.client.init({
+            apiKey: "YOUR_API_KEY", // Optional, if needed
+            clientId: 789022171426-oohp7v5so6ssupr50s3ppss0nl4cg9nm.apps.googleusercontent.com, // Replace with your OAuth Client ID
+            discoveryDocs: ["https://sheets.googleapis.com/$discovery/rest?version=v4"],
+            scope: "https://www.googleapis.com/auth/spreadsheets.readonly" // Only read access
+        }).then(() => {
+            console.log("Google API initialized successfully");
 
-// Initialize Firebase
-export const app = initializeApp(firebaseConfig); // Export the app instance
-const auth = getAuth(app);
-
-// Log Firebase initialization
-console.log('Firebase initialized:', app);
-
-// Google Sign-In Provider Configuration
-const provider = new GoogleAuthProvider();
-provider.setCustomParameters({
-    prompt: 'select_account' // Forces account selection even if one account is available
-});
-
-// Google Sign-In
-const signInButton = document.getElementById('signInButton');
-if (signInButton) {
-    signInButton.addEventListener('click', () => {
-        console.log('Sign-In button clicked.'); // Debugging: Check if this logs
-        signInWithPopup(auth, provider)
-            .then((result) => {
-                // Signed in successfully
-                const user = result.user;
-                console.log('Signed in as:', user.displayName);
-                // Redirect to the main app page
-                window.location.href = 'main.html'; // Replace with your main app page
-            })
-            .catch((error) => {
-                // Handle errors
-                console.error('Error signing in:', error.message);
-                alert('Error signing in. Please try again.');
-            });
+            // Check if the user is already signed in
+            const authInstance = gapi.auth2.getAuthInstance();
+            if (authInstance.isSignedIn.get()) {
+                const user = authInstance.currentUser.get();
+                console.log('User already signed in:', user.getBasicProfile().getName());
+                fetchData(); // Fetch data after sign-in
+            } else {
+                console.log('User not signed in.');
+            }
+        }).catch(error => {
+            console.error("Error initializing Google API:", error);
+        });
     });
-} else {
-    console.error('Sign-In button not found.');
 }
 
-// Check if the user is already signed in
-onAuthStateChanged(auth, (user) => {
-    if (user) {
-        // User is signed in
-        console.log('User is already signed in:', user.displayName);
+// Sign-in user and handle the OAuth flow
+function signIn() {
+    const authInstance = gapi.auth2.getAuthInstance();
+    authInstance.signIn().then(user => {
+        console.log("Signed in as:", user.getBasicProfile().getName());
+        fetchData(); // Fetch data once the user signs in
+    }).catch(error => {
+        console.error("Error signing in:", error);
+        alert('Error signing in. Please try again.');
+    });
+}
 
-        // Only redirect to main.html if we're on the sign-in page (index.html)
-        if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/') {
-            window.location.href = 'main.html'; // Redirect to the main app page
-        }
+// Fetch data from Google Sheets
+function fetchData() {
+    const sheetId = "1lxjoly4fuuRLEycqsfeRMm-uB5XdRbFkxC5JqlgtXn8"; // Replace with your actual Sheet ID
+    const range = "Inventory"; // Specify the range you want to access
+
+    // Ensure user is authenticated before making the request
+    gapi.auth2.getAuthInstance().currentUser.get().getAuthResponse().then(authResponse => {
+        gapi.client.sheets.spreadsheets.values.get({
+            spreadsheetId: sheetId,
+            range: range
+        }).then(response => {
+            console.log("Data retrieved from Google Sheets:", response.result.values);
+            displayData(response.result.values); // Display data in your app
+        }).catch(error => {
+            console.error("Error fetching data from Google Sheets:", error);
+        });
+    }).catch(error => {
+        console.error("Error fetching authentication response:", error);
+    });
+}
+
+// Display fetched data on the page (you can customize this)
+function displayData(data) {
+    const dataContainer = document.getElementById("dataContainer");
+    dataContainer.innerHTML = ""; // Clear existing content
+
+    if (data.length === 0) {
+        dataContainer.innerHTML = "No data found.";
     } else {
-        // No user signed in
-        console.log('No user signed in.');
-
-        // Only redirect to index.html if we're on the main page (main.html)
-        if (window.location.pathname.endsWith('main.html')) {
-            window.location.href = 'index.html'; // Redirect to the sign-in page
-        }
+        const table = document.createElement("table");
+        data.forEach(row => {
+            const tr = document.createElement("tr");
+            row.forEach(cell => {
+                const td = document.createElement("td");
+                td.textContent = cell;
+                tr.appendChild(td);
+            });
+            table.appendChild(tr);
+        });
+        dataContainer.appendChild(table); // Append table to container
     }
-});
+}
+
+// Handle sign-out functionality (optional)
+function signOut() {
+    const authInstance = gapi.auth2.getAuthInstance();
+    authInstance.signOut().then(() => {
+        console.log("User signed out.");
+        // Optionally, reload the page after sign-out to show the sign-in button
+        location.reload();
+    }).catch(error => {
+        console.error("Error signing out:", error);
+    });
+}
+
+// Add the Sign-In button in HTML
+document.getElementById("signInButton").addEventListener("click", signIn);
+document.getElementById("signOutButton").addEventListener("click", signOut);
+
+// Load the Google API client library and initialize everything
+window.onload = loadGoogleAPI;

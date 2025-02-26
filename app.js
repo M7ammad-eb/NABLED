@@ -52,10 +52,20 @@ if (signInButton) {
 // Check if the user is already signed in
 onAuthStateChanged(auth, (user) => {
     if (user) {
-        // User is signed in, redirect to the main app page
+        // User is signed in
         console.log('User is already signed in:', user.displayName);
-        window.location.href = 'main.html'; // Replace with your main app page
+
+        // Only redirect to main.html if we're on the sign-in page (index.html)
+        if (window.location.pathname.endsWith('index.html')) {
+            window.location.href = 'main.html'; // Redirect to the main app page
+        }
     } else {
+        // No user signed in
         console.log('No user signed in.');
+
+        // Only redirect to index.html if we're on the main page (main.html)
+        if (window.location.pathname.endsWith('main.html')) {
+            window.location.href = 'index.html'; // Redirect to the sign-in page
+        }
     }
 });

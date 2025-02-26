@@ -5,6 +5,9 @@ import { app } from "./app.js"; // Import the Firebase app instance from app.js
 // Initialize Firebase Auth
 const auth = getAuth(app);
 
+// Log Firebase Auth initialization
+console.log('Firebase Auth initialized:', auth);
+
 // Sign Out
 const signOutButton = document.getElementById('signOutButton');
 if (signOutButton) {
@@ -25,4 +28,4 @@ if (signOutButton) {
     });
 } else {
     console.error('Sign-Out button not found.');
-} 
+}

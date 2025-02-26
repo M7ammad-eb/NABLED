@@ -31,50 +31,65 @@ if (signOutButton) {
 }
 
 // Fetch Google Sheets data (replace with your Google Apps Script URL)
-fetch("https://script.google.com/macros/s/AKfycbxK264Jy1--3BSyGgw-9_GiZf5KU5hPZ17pH5VvRRx2C8rkrvAu9-ELoBbYllDr_eMUZQ/exec", {
-  method: "GET",
-  headers: {
-    "Content-Type": "application/json"
-  }
+fetch("https://script.google.com/macros/s/AKfycbzFjy6L9kfeGg50VfQdna7zQR6K4AoOQPq3VNYhdqD6vU_Q9ldClZMC2Vb2DP1EP9fF/exec", { //USE YOUR WEB APP URL
+    method: "GET", // GET is the default, you can omit this line
+    // headers: {  // You don't need this for a simple GET
+    //   "Content-Type": "application/json"
+    // }
 })
-.then(response => response.json())
+.then(response => {
+  if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`); //BEST PRACTICE - Check for errors
+  }
+  return response.json();
+})
 .then(data => {
-  console.log("Data received:", data);
-  // Update your UI with the data
+    console.log("Data received:", data);
+    displayData(data); // Call displayData *after* data is received
 })
 .catch(error => console.error("Error fetching data:", error));
 
 // Function to display the data in a table
 function displayData(data) {
     const container = document.getElementById("data-container");
+    if (!container) {
+      console.error("Data container not found."); // Handle missing container
+      return;
+    }
     container.innerHTML = ""; // Clear previous content
 
+    // Check if data is valid and has at least one row
+    if (!data || data.length === 0 || data[0].length === 0) {
+        container.textContent = "No data found.";
+        return;
+    }
     const table = document.createElement("table");
     table.style.width = "100%";
     table.border = "1";
 
-    // Create table header
+
+    // Create table header.  Use the *first* row as headers
     const thead = document.createElement("thead");
     const headerRow = document.createElement("tr");
-    Object.keys(data[0]).forEach(header => {
-        const th = document.createElement("th");
-        th.textContent = header;
-        headerRow.appendChild(th);
+    data[0].forEach(header => {  // Iterate over the *first* row
+      const th = document.createElement("th");
+      th.textContent = header;  // Use the values from the first row
+      headerRow.appendChild(th);
     });
     thead.appendChild(headerRow);
     table.appendChild(thead);
 
-    // Create table body
+    // Create table body.  Start from the *second* row (index 1)
     const tbody = document.createElement("tbody");
-    data.forEach(row => {
-        const tr = document.createElement("tr");
-        Object.values(row).forEach(value => {
-            const td = document.createElement("td");
-            td.textContent = value;
-            tr.appendChild(td);
-        });
-        tbody.appendChild(tr);
-    });
+    for (let i = 1; i < data.length; i++) { // Start from index 1
+      const tr = document.createElement("tr");
+      data[i].forEach(value => {
+        const td = document.createElement("td");
+        td.textContent = value;
+        tr.appendChild(td);
+      });
+      tbody.appendChild(tr);
+    }
     table.appendChild(tbody);
 
     container.appendChild(table);

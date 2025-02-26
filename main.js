@@ -42,7 +42,6 @@ fetch("https://script.google.com/macros/s/AKfycbwB2p9HSEbNrObDDh_0Hmg3MWDfPjyJ2d
 .then(res => console.log(res));
 
 
-
 function displayData(data) {
     const container = document.getElementById("data-container");
     container.innerHTML = ""; // Clear previous content

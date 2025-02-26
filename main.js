@@ -46,6 +46,7 @@ fetch("https://script.google.com/macros/s/AKfycbyxxp42FAt73VYqCzE1r7DiVDyscilJ8N
 })
 .catch(error => console.error("Error fetching data:", error));
 
+});
 
 function displayData(data) {
     const container = document.getElementById("data-container");

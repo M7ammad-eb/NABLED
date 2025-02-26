@@ -43,8 +43,8 @@ fetch("https://script.google.com/macros/s/AKfycbyxxp42FAt73VYqCzE1r7DiVDyscilJ8N
     console.log("Data received:", data);
     displayData(data);
   // Update your UI with the data
-})
-.catch(error => console.error("Error fetching data:", error));
+//})
+//.catch(error => console.error("Error fetching data:", error));
 
 });
 

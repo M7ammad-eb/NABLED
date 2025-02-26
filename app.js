@@ -56,7 +56,7 @@ onAuthStateChanged(auth, (user) => {
         console.log('User is already signed in:', user.displayName);
 
         // Only redirect to main.html if we're on the sign-in page (index.html)
-        if (window.location.pathname.endsWith('index.html')) {
+        if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/') {
             window.location.href = 'main.html'; // Redirect to the main app page
         }
     } else {

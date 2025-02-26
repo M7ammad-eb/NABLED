@@ -41,11 +41,11 @@ fetch("https://script.google.com/macros/s/AKfycbysGgGsp5L9hY5Hj1IcdosM_nHFIIfoJM
 .then(response => response.json())
 .then(data => {
   console.log("Data received:", data);
-  // Update your UI with the data
+  displayData(data);// Update your UI with the data
 })
 .catch(error => console.error("Error fetching data:", error));
 
-});
+
 
 function displayData(data) {
     const container = document.getElementById("data-container");

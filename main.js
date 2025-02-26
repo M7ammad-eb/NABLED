@@ -29,3 +29,55 @@ if (signOutButton) {
 } else {
     console.error('Sign-Out button not found.');
 }
+
+
+// Fetsh Google sheets data
+fetch("https://script.google.com/macros/s/AKfycbyxxp42FAt73VYqCzE1r7DiVDyscilJ8NbRi2B-SKj23aIxwnMuTGdtOQO7NIg1FwcFwQ/exec", {
+  method: "GET",
+  headers: {
+    "Content-Type": "application/json"
+  }
+})
+.then(response => response.json())
+.then(data => {
+  console.log("Data received:", data);
+  // Update your UI with the data
+})
+.catch(error => console.error("Error fetching data:", error));
+
+});
+
+function displayData(data) {
+    const container = document.getElementById("data-container");
+    container.innerHTML = ""; // Clear previous content
+
+    const table = document.createElement("table");
+    table.style.width = "100%";
+    table.border = "1";
+
+    // Create table header
+    const thead = document.createElement("thead");
+    const headerRow = document.createElement("tr");
+    Object.keys(data[0]).forEach(header => {
+        const th = document.createElement("th");
+        th.textContent = header;
+        headerRow.appendChild(th);
+    });
+    thead.appendChild(headerRow);
+    table.appendChild(thead);
+
+    // Create table body
+    const tbody = document.createElement("tbody");
+    data.forEach(row => {
+        const tr = document.createElement("tr");
+        Object.values(row).forEach(value => {
+            const td = document.createElement("td");
+            td.textContent = value;
+            tr.appendChild(td);
+        });
+        tbody.appendChild(tr);
+    });
+    table.appendChild(tbody);
+
+    container.appendChild(table);
+}

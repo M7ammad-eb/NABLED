@@ -30,18 +30,22 @@ if (signOutButton) {
     console.error('Sign-Out button not found.');
 }
 
-
-// Fetsh Google sheets data
+// Fetch Google Sheets data (replace with your Google Apps Script URL)
 fetch("https://script.google.com/macros/s/AKfycbwB2p9HSEbNrObDDh_0Hmg3MWDfPjyJ2dJaZFDE0gU0Iz4uzmwhJGX2vLsu0Law8nJB5A/exec", {
   method: "GET",
   headers: {
     "Content-Type": "application/json"
   }
 })
-.then(res => res.json())
-.then(res => console.log(res));
+.then(response => response.json())
+.then(data => {
+  console.log("Data received:", data);
+  // Display the fetched data
+  displayData(data);
+})
+.catch(error => console.error("Fetch error:", error));
 
-
+// Function to display the data in a table
 function displayData(data) {
     const container = document.getElementById("data-container");
     container.innerHTML = ""; // Clear previous content
